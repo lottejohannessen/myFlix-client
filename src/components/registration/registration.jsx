@@ -44,27 +44,27 @@ export function RegistrationView(props) {
         </Form>
     )
 
-    // return (
-    //     <form>
-    //         <label>
-    //             Username:
-    //             <input type="text" value={username} onChange={e => setUsername(e.target.value)}/>
-    //         </label>
-    //         <label>
-    //             Password:
-    //             <input type="text" value={password} onChange={e => setPassword(e.target.value)}/>
-    //         </label>
-    //         <label>
-    //             Email:
-    //             <input type="text" value={email} onChange={e => setEmail(e.target.value)}/>
-    //         </label>
-    //         <label>
-    //             Birthdate:
-    //             <input type="text" value={birthdate} onChange={e => setBirthdate(e.target.value)}/>
-    //         </label>
-    //         <button type='button' onClick={handleSubmit}>Submit</button>
-    //     </form>
-    // )
+    return (
+        <form>
+            <label>
+                Username:
+                <input type="text" value={username} onChange={e => setUsername(e.target.value)}/>
+            </label>
+            <label>
+                Password:
+                <input type="text" value={password} onChange={e => setPassword(e.target.value)}/>
+            </label>
+            <label>
+                Email:
+                <input type="text" value={email} onChange={e => setEmail(e.target.value)}/>
+            </label>
+            <label>
+                Birthdate:
+                <input type="text" value={birthdate} onChange={e => setBirthdate(e.target.value)}/>
+            </label>
+            <button type='button' onClick={handleSubmit}>Submit</button>
+        </form>
+    )
 }
 
 RegistrationView.Proptypes = {
