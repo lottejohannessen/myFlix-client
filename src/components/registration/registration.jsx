@@ -2,16 +2,35 @@ import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 export function RegistrationView(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [birthdate, setBirthdate] = useState('');
+    const [birthday, setBirthday] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(username, password, email, birthdate);
+        console.log(username, password, email, birthday);
+        axios.post('https://lotte-johannessen-myflixdb.herokuapp.com/users', {
+            // Username: username,
+            // Password: password,
+            // Birthday: birthday,
+            // Email: email
+            Username: username, // redux
+            Password: password,
+            Birthday: birthday,
+            Email: email
+        })
+            .then(response => {
+                const data = response.data;
+                console.log(data);
+                window.open('/', '_self'); //self: page will open in the current tab
+            })
+            .catch(e => {
+                console.log('error at registration')
+        });
         props.onRegister(username);
     }
 
@@ -29,9 +48,9 @@ export function RegistrationView(props) {
                 <Form.Label>Email:</Form.Label>
                 <Form.Control type='text' onChange={e => setEmail(e.target.value)} />
             </Form.Group>
-            <Form.Group controlId='registerBirthdate'>
-                <Form.Label>Birthdate:</Form.Label>
-                <Form.Control type='text' onChange={e => setBirthdate(e.target.value)} />
+            <Form.Group controlId='registerBirthday'>
+                <Form.Label>Birthday:</Form.Label>
+                <Form.Control type='text' onChange={e => setBirthday(e.target.value)} />
             </Form.Group>
             
             <Button variant='primary' type='submit' onClick={handleSubmit}>
@@ -44,29 +63,7 @@ export function RegistrationView(props) {
         </Form>
     )
 
-    // return (
-    //     <form>
-    //         <label>
-    //             Username:
-    //             <input type="text" value={username} onChange={e => setUsername(e.target.value)}/>
-    //         </label>
-    //         <label>
-    //             Password:
-    //             <input type="text" value={password} onChange={e => setPassword(e.target.value)}/>
-    //         </label>
-    //         <label>
-    //             Email:
-    //             <input type="text" value={email} onChange={e => setEmail(e.target.value)}/>
-    //         </label>
-    //         <label>
-    //             Birthdate:
-    //             <input type="text" value={birthdate} onChange={e => setBirthdate(e.target.value)}/>
-    //         </label>
-    //         <button type='button' onClick={handleSubmit}>Submit</button>
-    //     </form>
-    // )
 }
-
 RegistrationView.Proptypes = {
     onRegister: Proptypes.func.isRequired
 };

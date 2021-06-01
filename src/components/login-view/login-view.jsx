@@ -9,7 +9,7 @@ export function LoginView(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('boemyflix/login', {
+        axios.post('https://lotte-johannessen-myflixdb.herokuapp.com/login', {
             Username: username,
             Password: password
         })
