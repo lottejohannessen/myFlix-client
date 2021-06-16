@@ -10,7 +10,7 @@ import { RegistrationView } from '../registration/registration';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
-import { ProfileUpdate } from '../profile-view/profile-update';
+import  ProfileUpdate  from '../profile-view/profile-update';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -94,6 +94,7 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
+      console.log(response.data , 'response');
       // Assign the result to the state
       this.setState({
         movies: response.data
@@ -146,8 +147,8 @@ export class MainView extends React.Component {
            <Route path="/profile" render={({}) =>
               <ProfileView userInfo={userInfo} movies={movies} />
           } />
-            <Route path="/profile/update" exact render={({}) =>
-              <ProfileUpdate userInfo={userInfo} updateUser={data => this.updateUser(data)} />
+            <Route path="/profile/update" render={({}) =>
+              <ProfileUpdate userInfo={userInfo} user={user} updateUser={data => this.updateUser(data)} />
           } />
         </Row>
       </Router>

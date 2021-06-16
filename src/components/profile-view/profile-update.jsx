@@ -28,6 +28,7 @@ export default function ProfileUpdate(props) {
       }, [currUsername, currEmail, currBirthday]);
 
   const user = localStorage.getItem('user');
+  console.log('user');
 
   const handleUpdate = e => {
     e.preventDefault();
@@ -65,8 +66,6 @@ export default function ProfileUpdate(props) {
         <Col md={8}>
           <Card>
             <Card.Body>
-              <Card.Img variant="top" style={{ maxWidth: "50px"}} src={process.env.PUBLIC_URL + "/images/update.png" } />
-
               <Form>
                 Please update your profile information.
                 <Form.Group controlId="formUsername">

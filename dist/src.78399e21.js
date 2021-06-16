@@ -51748,6 +51748,7 @@ function ProfileUpdate(props) {
     setBirthday(currBirthday);
   }, [currUsername, currEmail, currBirthday]);
   var user = localStorage.getItem('user');
+  console.log('user');
 
   var handleUpdate = function handleUpdate(e) {
     e.preventDefault();
@@ -51780,13 +51781,7 @@ function ProfileUpdate(props) {
     className: "profile-view"
   }, /*#__PURE__*/_react.default.createElement(_Col.default, {
     md: 8
-  }, /*#__PURE__*/_react.default.createElement(_Card.default, null, /*#__PURE__*/_react.default.createElement(_Card.default.Body, null, /*#__PURE__*/_react.default.createElement(_Card.default.Img, {
-    variant: "top",
-    style: {
-      maxWidth: "50px"
-    },
-    src: undefined + "/images/update.png"
-  }), /*#__PURE__*/_react.default.createElement(_Form.default, null, "Please update your profile information.", /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
+  }, /*#__PURE__*/_react.default.createElement(_Card.default, null, /*#__PURE__*/_react.default.createElement(_Card.default.Body, null, /*#__PURE__*/_react.default.createElement(_Form.default, null, "Please update your profile information.", /*#__PURE__*/_react.default.createElement(_Form.default.Group, {
     controlId: "formUsername"
   }, /*#__PURE__*/_react.default.createElement(_Form.default.Label, null, "Username: "), /*#__PURE__*/_react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -51863,7 +51858,7 @@ var _genreView = require("../genre-view/genre-view");
 
 var _profileView = require("../profile-view/profile-view");
 
-var _profileUpdate = require("../profile-view/profile-update");
+var _profileUpdate = _interopRequireDefault(require("../profile-view/profile-update"));
 
 var _Row = _interopRequireDefault(require("react-bootstrap/Row"));
 
@@ -51995,7 +51990,8 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        // Assign the result to the state
+        console.log(response.data, 'response'); // Assign the result to the state
+
         _this3.setState({
           movies: response.data
         });
@@ -52097,12 +52093,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
         }
       }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
         path: "/profile/update",
-        exact: true,
         render: function render(_ref5) {
           _objectDestructuringEmpty(_ref5);
 
-          return /*#__PURE__*/_react.default.createElement(_profileUpdate.ProfileUpdate, {
+          return /*#__PURE__*/_react.default.createElement(_profileUpdate.default, {
             userInfo: userInfo,
+            user: user,
             updateUser: function updateUser(data) {
               return _this4.updateUser(data);
             }
