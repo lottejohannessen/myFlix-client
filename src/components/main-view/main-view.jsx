@@ -9,6 +9,8 @@ import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration/registration';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
+import { ProfileView } from '../profile-view/profile-view';
+import { ProfileUpdate } from '../profile-view/profile-update';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -20,7 +22,8 @@ export class MainView extends React.Component {
 
     this.state = {
       movies: [],
-      user: null
+      user: null, 
+      userInfo: {}
     };
   }
 
@@ -31,8 +34,35 @@ export class MainView extends React.Component {
         user: localStorage.getItem('user')
       });
       this.getMovies(accessToken);
+      this.getUser(localStorage.getItem("user"), accessToken);
     }
   }
+
+  updateUser(data) {
+    this.setState({
+      userInfo: data
+    });
+    localStorage.setItem('user', data.Username);
+  }
+
+  getUser(user, token) {
+    axios
+      .get('https://lotte-johannessen-myflixdb.herokuapp.com/users/' + user, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        // Assign the result to the state
+        this.setState({
+          email: response.data.Email,
+          birthday: response.data.Birthday,
+          token: token,
+          userInfo: response.data
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
 
 /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
 
@@ -75,7 +105,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user } = this.state;
+    const { movies, user, userInfo } = this.state;
 
     if (!user) return <Row>
       <Col>
@@ -113,7 +143,12 @@ export class MainView extends React.Component {
               <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
             </Col>
           }} />
-
+           <Route path="/profile" render={({}) =>
+              <ProfileView userInfo={userInfo} movies={movies} />
+          } />
+            <Route path="/profile/update" exact render={({}) =>
+              <ProfileUpdate userInfo={userInfo} updateUser={data => this.updateUser(data)} />
+          } />
         </Row>
       </Router>
     );

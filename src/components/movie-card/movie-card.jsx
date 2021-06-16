@@ -9,7 +9,7 @@ export class MovieCard extends React.Component {
   handleAdd() {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
-    axios.post(`https://lotte-johannessen-myflixdb.herokuapp.com/users/${user}` + "/movies/" +
+    axios.post(`https://lotte-johannessen-myflixdb.herokuapp.com/users/${user}` + "/Movies/" +
       this.props.movie._id, {},
       { headers: { Authorization: `Bearer ${token}` } }
     )
@@ -36,7 +36,7 @@ export class MovieCard extends React.Component {
             <Button className="mb-2" block variant="primary">Genre</Button>
           </Link>
           <Link to={`/movies/${movie._id}`}>
-            <Button className="mb-2" block variant="primary" onClick={() => this.handleAdd(movie)}>Add to favourite</Button>
+            <Button className="mb-2" block variant="primary" onClick={(e) => { e.preventDefault(); this.handleAdd(movie)}}>Add to favourite</Button>
           </Link>
         </Card.Body>
       </Card>
