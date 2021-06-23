@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-
+import { connect } from 'react-redux';
+import { setMovies } from '../../actions/actions';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { MovieCard } from '../movie-card/movie-card';
@@ -14,6 +15,7 @@ import  ProfileUpdate  from '../profile-view/profile-update';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import MoviesList from '../movies-list/movies-list';
 
 export class MainView extends React.Component {
 
