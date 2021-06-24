@@ -17,7 +17,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import MoviesList from '../movies-list/movies-list';
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
 
   constructor() {
     super();
@@ -97,10 +97,11 @@ export class MainView extends React.Component {
     })
     .then(response => {
       console.log(response.data , 'response');
-      // Assign the result to the state
-      this.setState({
-        movies: response.data
-      });
+      // // Assign the result to the state
+      // this.setState({
+      //   movies: response.data
+      // });
+      this.props.setMovies(response.data);
     })
     .catch(function (error) {
       console.log(error);
@@ -108,7 +109,8 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user, userInfo } = this.state;
+    const { user, userInfo } = this.state;
+    const { movies } = this.props;
 
     if (!user) return <Row>
       <Col>
@@ -157,3 +159,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, { setMovies } )(MainView);
