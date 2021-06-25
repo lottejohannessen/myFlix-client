@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
 
-export class GenreView extends React.Component {
+class GenreView extends React.Component {
   render() {
-    const { genre, onBackClick } = this.props;
+    const { genre, onBackClick, movies } = this.props;
 
     return (
       <div className="genre-view">
@@ -14,6 +15,12 @@ export class GenreView extends React.Component {
           <Card.Body>
             <Card.Title><span className='text-primary'>Name: </span> {genre.Name}</Card.Title>
             <Card.Text><span className='text-primary'>Bio: </span>{genre.Description}</Card.Text>
+            {
+              movies.map((m) => {//loop through movieData (= movies-collection in DB) and use the one that has this Genre Name that we're in
+                if (m.Genre.Name === genre.Name)
+                  return <div>{m.Title}</div>              
+                })
+            }
             <Button block onClick={() => { onBackClick(); }}>Back</Button>
           </Card.Body>
         </Card>
@@ -30,3 +37,9 @@ GenreView.propTypes = {
   }),
   onBackClick: PropTypes.func.isRequired
 };
+
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, {} )(GenreView);

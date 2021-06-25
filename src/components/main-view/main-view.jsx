@@ -3,13 +3,13 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { setMovies } from '../../actions/actions';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
+import { NavView } from '../nav-view/nav-view'
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration/registration';
-import { DirectorView } from '../director-view/director-view';
-import { GenreView } from '../genre-view/genre-view';
+import  DirectorView  from '../director-view/director-view';
+import  GenreView  from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 import  ProfileUpdate  from '../profile-view/profile-update';
 
@@ -121,6 +121,7 @@ class MainView extends React.Component {
 
     return (
       <Router>
+        <NavView/>
         <Row className="main-view justify-content-md-center">
           <Route exact path="/" render={() => {
             return movies.map(m => (
@@ -129,9 +130,9 @@ class MainView extends React.Component {
               </Col>
             ))
           }} />
-          <Route path="/movies/:movieId" render={({ match }) => {
+          <Route path="/movies/:movieId" render={({ match, history }) => {
             return <Col md={8}>
-              <MovieView movie={movies.find(m => m._id === match.params.movieId)} />
+              <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack() } />
             </Col>
           }} />
 

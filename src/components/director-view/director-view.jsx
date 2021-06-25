@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
 
-export class DirectorView extends React.Component {
+ class DirectorView extends React.Component {
   render() {
-    const { director, onBackClick } = this.props;
+    const { director, onBackClick, movies } = this.props;
+    console.log(movies);
 
     return (
       <div className="director-view">
@@ -16,6 +18,12 @@ export class DirectorView extends React.Component {
             <Card.Text><span className='text-primary'>Bio: </span>{director.Bio}</Card.Text>
             <Card.Text><span className='text-primary'>Birth: </span>{director.Birth}</Card.Text>
             <Card.Text><span className='text-primary'>Death: </span>{director.Death}</Card.Text>
+            {
+              movies.map((m) => {//loop through movieData (= movies-collection in DB) and use the one that has this Genre Name that we're in
+                if (m.Director.Name === director.Name)
+                  return <div>{m.Title}</div>              
+                })
+            }
             <Button block onClick={() => { onBackClick(); }}>Back</Button>
           </Card.Body>
         </Card>
@@ -34,3 +42,9 @@ DirectorView.propTypes = {
   }),
   onBackClick: PropTypes.func.isRequired
 };
+
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, {} )(DirectorView);
